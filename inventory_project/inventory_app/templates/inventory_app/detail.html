@@ -14,9 +14,9 @@
      <p>{{item.total}}</p> 
       <p>{{item.upc}}</p> -->
 
-        <nav>
-    <div class="nav-wrapper">
-      <a href="#" class="brand-logo center">{{item.name}}</a>
+    <nav>
+    <div class="indigo darken-4 nav-wrapper">
+      <a href="#" class="brand-logo center">Details</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="{% url 'inventory:catalog' %}">Catalog</a></li>
         <li><a href="{% url 'inventory:add' %}">Add Item</a></li>
@@ -26,23 +26,60 @@
   </nav>
 
 
-  <!-- <div class="row valign-wrapper">
-    <div class="col s12 m12 l12">
-      <div class="card-panel teal">
-        <span class="white-text">I am a very simple card. I am good at containing small bits of information.
-        I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.
-        </span>
-      </div>
-    </div>
-  </div> -->
-
 <div class="container">
 
   
+<div class="row">
+    
+  <form action="{% url 'inventory:detail' item.id %}" method="post">
+
+      {% csrf_token %}
+     
+      <div class="row">
+        <div class="input-field col s12">
+          <input placeholder="Coca-Cola 2L" name="name" id="name" type="text" value="{{ item.name }}" required>
+          <label for="name">Item</label>
+        </div>
+      </div>
+      
+        <div class="row">
+        <div class="input-field col s12">
+          <input placeholder="$1.99" name="price" id="price" type="number" step="0.01" min="0.00" data-error="2 decimal places" value="{{ item.price }}" required>
+          <label for="price">Price</label>
+        </div>
+      </div>
+
+         <div class="row">
+        <div class="input-field col s12">
+    <input placeholder="100" name="quantity" id="quantity" type="number" value="{{ item.quantity }}" required>
+          <label for="quantity">Quantity</label>
+        </div>
+      </div>
+
+            <div class="row">
+        <div class="input-field col s12">
+          <input placeholder="036000291452" name="upc" id="upc" type="text" data-length="12" maxlength="12" value="{{ item.upc }}" required>
+          <label for="upc">UPC (Barcode)</label>
+        </div>
+      </div>
+
+        <button class="btn waves-effect waves-light indigo darken-4" type="submit" name="action" value="save">Save
+    <i class="material-icons right">save</i>
+  </button>
+
+         <button class="btn waves-effect waves-light red darken-4" type="submit" name="action" value="delete">Delete
+    <i class="material-icons right">delete</i>
+  </button>
+      
+    </form>
+  </div>
+
+
 
 </div>
 
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
   </body>
 </html>

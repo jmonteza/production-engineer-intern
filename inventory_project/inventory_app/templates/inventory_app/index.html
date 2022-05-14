@@ -11,10 +11,10 @@
 
     
     <nav>
-    <div class="nav-wrapper">
+    <div class="indigo darken-4 nav-wrapper">
       <a href="#" class="brand-logo center">Inventory System</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="{% url 'inventory:catalog' %}">Catalog</a></li>
+        <li class="active"><a href="{% url 'inventory:catalog' %}">Catalog</a></li>
         <li><a href="{% url 'inventory:add' %}">Add Item</a></li>
         <!-- <li><a href="badges.html">Components</a></li> -->
       </ul>
@@ -51,7 +51,7 @@
         </div>
         <div class="card-action">
           <!-- <a href="../product/{{item.id}}/">Details</a> -->
-          <a href="{% url 'inventory:detail' item.id %}">Details</a>
+          <a class="indigo-text indigo-darken-4" href="{% url 'inventory:detail' item.id %}">Details</a>
         </div>
       </div>
     </div>
