@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Add Inventory Item</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  </head>
+  <body>
+  
+        <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo center">Inventory System</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="{% url 'inventory:catalog' %}">Catalog</a></li>
+        <li><a href="{% url 'inventory:add' %}">Add Item</a></li>
+        <!-- <li><a href="badges.html">Components</a></li> -->
+      </ul>
+    </div>
+  </nav>
+
+<div class="container">
+
+    <!-- <form action="{% url 'inventory:add' %}" method="post">
+
+      {% csrf_token %}
+
+  <label for="fname">Item</label><br>
+  <input type="text" id="name" name="name" required><br>
+
+  <label for="lname">Price</label><br>
+  <input type="number" id="price" name="price" step="0.01" required><br><br>
+
+  <label for="lname">Quantity</label><br>
+  <input type="number" id="quantity" name="quantity" min="1" required><br><br>
+
+
+  <label for="lname">UPC (Barcode)</label><br>
+  <input type="text" id="upc" name="upc" size="20" maxlength="12" required><br><br>
+
+
+
+  <input type="submit" value="Submit">
+
+    <input type="reset" value="Reset">
+</form>  -->
+
+
+<div class="row">
+    
+  <form action="{% url 'inventory:add' %}" method="post">
+
+      {% csrf_token %}
+     
+      <div class="row">
+        <div class="input-field col s12">
+          <input placeholder="Coca-Cola 2L" name="name" id="name" type="text" required>
+          <label for="name">Item</label>
+        </div>
+      </div>
+      
+        <div class="row">
+        <div class="input-field col s12">
+          <input placeholder="$1.99" name="price" id="price" type="number" step="0.01" min="0.00" data-error="2 decimal places" required>
+          <label for="price">Price</label>
+        </div>
+      </div>
+
+         <div class="row">
+        <div class="input-field col s12">
+    <input placeholder="100" name="quantity" id="quantity" type="number" required>
+          <label for="quantity">Quantity</label>
+        </div>
+      </div>
+
+            <div class="row">
+        <div class="input-field col s12">
+          <input placeholder="036000291452" name="upc" id="upc" type="text" data-length="12" maxlength="12" required>
+          <label for="upc">UPC (Barcode)</label>
+        </div>
+      </div>
+
+        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+    <i class="material-icons right">send</i>
+  </button>
+
+      
+    </form>
+  </div>
+
+
+
+</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  </body>
+</html>

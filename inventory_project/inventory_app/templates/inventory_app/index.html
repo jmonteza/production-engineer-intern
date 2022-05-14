@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Catalog</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  </head>
+  <body>
+
+    
+    <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo center">Inventory System</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="{% url 'inventory:catalog' %}">Catalog</a></li>
+        <li><a href="{% url 'inventory:add' %}">Add Item</a></li>
+        <!-- <li><a href="badges.html">Components</a></li> -->
+      </ul>
+    </div>
+  </nav>
+
+<div class="container">
+
+
+      {% if all_items %}
+
+      <!-- <ul> -->
+     
+          <!-- <li>
+              <a href="../product/{{item.id}}/">{{item.name}}</a>
+        </li> -->
+
+ <div class="row">
+
+         {% for item in all_items %}
+
+    <div class="col s12 m12 l4">
+      <div class="card">
+        <div class="card-image">
+          <img src="https://materializecss.com/images/sample-1.jpg">
+          <span class="card-title">{{item.name}}</span>
+        </div>
+        <div class="card-content">
+          <h6><b>Price:</b> ${{item.price}}</h6>
+          <h6><b>Quantity:</b> {{item.quantity}}</h6>
+          <h6><b>Total Value:</b> ${{item.total}}</h6>
+         <h6><b>UPC:</b> {{item.upc}}</h6>
+        
+        </div>
+        <div class="card-action">
+          <!-- <a href="../product/{{item.id}}/">Details</a> -->
+          <a href="{% url 'inventory:detail' item.id %}">Details</a>
+        </div>
+      </div>
+    </div>
+
+
+                {% endfor %}
+
+  </div>
+
+
+      <!-- </ul> -->
+
+
+
+      {% else %}
+      <p> Inventory is empty </p>
+
+      {% endif %}
+     
+
+      
+</div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  </body>
+</html>

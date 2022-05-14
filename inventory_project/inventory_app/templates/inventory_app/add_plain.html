@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Add Inventory Item</title>
+  </head>
+  <body>
+    
+    <form action="{% url 'inventory:add' %}" method="post">
+
+      {% csrf_token %}
+
+  <label for="fname">Item</label><br>
+  <input type="text" id="name" name="name" required><br>
+
+  <label for="lname">Price</label><br>
+  <input type="number" id="price" name="price" step="0.01" required><br><br>
+
+  <label for="lname">Quantity</label><br>
+  <input type="number" id="quantity" name="quantity" min="1" required><br><br>
+
+
+  <label for="lname">UPC (Barcode)</label><br>
+  <input type="text" id="upc" name="upc" size="20" maxlength="12" required><br><br>
+
+
+
+  <input type="submit" value="Submit">
+</form> 
+
+  </body>
+</html>
