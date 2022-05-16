@@ -4,6 +4,23 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 
+class Location(models.Model):
+    city = models.CharField(max_length=64)
+    province = models.CharField(max_length=64)
+    country = models.CharField(max_length=64)
+
+    def __str__(self):
+        return "{}, {}, {}".format(self.city, self.province, self.country)
+
+class Weather(models.Model):
+    location = models.OneToOneField(Location, on_delete=models.CASCADE, primary_key=True)
+    temperature = models.FloatField(validators=[MinValueValidator(0.0)])
+    pressure = models.IntegerField(validators=[MinValueValidator(0)])
+    humidity = models.IntegerField(validators=[MinValueValidator(0)])
+
+    def __str__(self):
+        return "{} | {} | Temp: {}, Pressure: {}, Humidity: {}".format(self.location.id, self.location, self.temperature, self.pressure, self.humidity)
+
 class Shipment(models.Model):
     first_name = models.CharField(max_length=32)
 
@@ -41,6 +58,8 @@ class Item(models.Model):
     # 13 for International Article Number (European Article Number or EAN)
     upc = models.CharField(max_length=13)
 
+    # City + Weather
+    weather = models.ForeignKey(Weather, default=1, on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return "{} | {}".format(self.id, self.name)
