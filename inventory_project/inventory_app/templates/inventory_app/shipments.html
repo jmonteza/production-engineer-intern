@@ -16,7 +16,7 @@
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li class="active"><a href="{% url 'inventory:catalog' %}">Catalog</a></li>
         <li><a href="{% url 'inventory:add' %}">Add Item</a></li>
-         <li><a href="{% url 'inventory:all_shipments' %}">Shipments</a></li>
+        <li><a href="{% url 'inventory:all_shipments' %}">Shipments</a></li>
       </ul>
     </div>
   </nav>
@@ -24,7 +24,7 @@
 <div class="container">
 
 
-      {% if all_items %}
+      {% if shipments %}
 
       <!-- <ul> -->
      
@@ -34,24 +34,32 @@
 
  <div class="row">
 
-         {% for item in all_items %}
+         {% for shipment in shipments %}
 
     <div class="col s12 m12 l4">
       <div class="card">
         <div class="card-image">
           <img src="https://materializecss.com/images/sample-1.jpg">
-          <span class="card-title">{{item.name}}</span>
+          <span class="card-title"><b>Shipment #{{shipment.id}}</b></span>
         </div>
         <div class="card-content">
-          <h6><b>Price:</b> ${{item.price}}</h6>
+          <!-- <h6><b>Price:</b> ${{item.price}}</h6>
           <h6><b>Quantity:</b> {{item.quantity}}</h6>
           <h6><b>Total Value:</b> ${{item.total}}</h6>
-         <h6><b>UPC:</b> {{item.upc}}</h6>
-        
+         <h6><b>UPC:</b> {{item.upc}}</h6> -->
+         
+<h6><b>Receiver:</b> {{shipment.first_name}} {{shipment.last_name}}</h6>         
+
+<h6><b>Shipping Code:</b> {{shipment.ship_code}}</h6>
+
+<h6><b>Tracking Number:</b> {{shipment.tracking_number}}</h6>
+
+<h6><b>Address:</b> {{shipment.street_address}} {{shipment.city}} {{shipment.state_province_region}}</h6>
+
         </div>
         <div class="card-action">
-          <!-- <a href="../product/{{item.id}}/">Details</a> -->
-          <a class="indigo-text indigo-darken-4" href="{% url 'inventory:detail' item.id %}">Details</a>
+    
+          <a class="indigo-text indigo-darken-4" href="{% url 'inventory:shipments' shipment.id %}">Details</a>
         </div>
       </div>
     </div>

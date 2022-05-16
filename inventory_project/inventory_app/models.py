@@ -46,3 +46,12 @@ class Item(models.Model):
         return "{} | {}".format(self.id, self.name)
 
 
+class ItemForShipment(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    shipment = models.ForeignKey(Shipment, on_delete=models.CASCADE)
+    quantity = models.IntegerField(validators=[MinValueValidator(0)])
+
+    def __str__(self):
+        return "{} | {}".format(self.item.name, self.shipment.ship_code)
+
+    
