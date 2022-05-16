@@ -31,6 +31,8 @@
 
 <h1 class="center-align">Add Item to Shipment #{{shipment.id}}</h1>
 
+{% if catalog %}
+
 <form action="{% url 'inventory:shipments' shipment.id %}" method="post">
   {% csrf_token %}
 
@@ -56,13 +58,21 @@
         </div>
       </div>
 
+  
+
        <button class="btn waves-effect waves-light white indigo-text indigo-darken-4" type="submit" name="action">Add
     <i class="material-icons right">add</i>
   </button>
 
 
+
 </form>
 
+{% else %}
+
+<h6 class="center-align">No inventory items to add</h6>
+
+{% endif %}
 
 
 </div>

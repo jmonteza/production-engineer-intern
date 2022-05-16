@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .models import Item, Shipment, ItemForShipment
 from django.db.models import Q
-
+from .utils import generate_ship_code, generate_tracking_number
 # Create your views here.
 
 
@@ -75,6 +75,25 @@ def catalog(request):
     # return HttpResponse(output)
 
 
+def new_shipment(request):
+    if request.method == 'GET':
+        return render(request, 'inventory_app/add_shipment.html')
+    elif request.method == 'POST':
+        fname = request.POST.get("fname")
+        lname = request.POST.get("lname")
+        company = request.POST.get("company")
+        street = request.POST.get("street")
+        city = request.POST.get("city")
+        province = request.POST.get("province")
+        postal = request.POST.get("postal")
+        country = request.POST.get("country")
+        ship_code = generate_ship_code()
+        tracking_number = generate_tracking_number()
+
+        Shipment.objects.create(first_name=fname, last_name=lname, company=company, street_address=street, city=city, state_province_region=province, postal_code=postal, country=country, ship_code=ship_code, tracking_number=tracking_number)
+
+        return HttpResponseRedirect(reverse('inventory:all_shipments'))
+
 def shipments(request):
     shipments = Shipment.objects.all()
     print(shipments)
@@ -106,18 +125,24 @@ def shipment_detail(request, shipment_id):
     
     else:
         item_id = request.POST.get("dropdown")
-        quantity = request.POST.get("quantity")
+        quantity = int(request.POST.get("quantity"))
 
         item = Item.objects.get(pk=item_id)
         shipment = Shipment.objects.get(pk=shipment_id)
         
+        item.quantity = item.quantity - quantity
+     
+        item.save()
+
         obj, created = ItemForShipment.objects.update_or_create(
             item = item, shipment=shipment, defaults={
                 'quantity': quantity
             }
         )
 
+
+
         # print(item)
         # print(quantity)
 
-        return HttpResponseRedirect(reverse('inventory:shipments', kwargs={'shipment_id':1}))
+        return HttpResponseRedirect(reverse('inventory:shipments', kwargs={'shipment_id':shipment_id}))
