@@ -39,6 +39,20 @@
         </div>
       </div>
 
+   <select name="dropdown" class="browser-default" required>
+      <option value="" disabled selected>Choose city</option>
+      {% if locations %}
+
+      {% for location in locations %}
+      <option value="{{location.location.id}}">{{location.location.city}}</option>
+      {% endfor %}
+
+      {% endif %}
+
+</select>
+
+<hr>
+<h1></h1>
         <button class="btn waves-effect waves-light indigo darken-4" type="submit" name="action">Submit
     <i class="material-icons right">send</i>
   </button>

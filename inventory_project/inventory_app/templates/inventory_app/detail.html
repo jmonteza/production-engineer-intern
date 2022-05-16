@@ -38,6 +38,29 @@
         </div>
       </div>
 
+
+   <select name="dropdown" class="browser-default" required>
+      <option value="" disabled selected>Choose city</option>
+      {% if locations %}
+
+      {% for location in locations %}
+      {% if location.location.city == item.weather.location.city %}
+      <option value="{{location.location.id}}" selected>{{location.location.city}}</option>
+
+      {% else %}
+
+      <option value="{{location.location.id}}">{{location.location.city}}</option>
+
+      {% endif %}
+
+      {% endfor %}
+
+      {% endif %}
+
+</select>
+
+<h1></h1>
+
         <button class="btn waves-effect waves-light indigo darken-4" type="submit" name="action" value="save">Save
     <i class="material-icons right">save</i>
   </button>

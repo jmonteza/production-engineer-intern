@@ -24,7 +24,12 @@
           <h6><b>Quantity:</b> {{item.quantity}}</h6>
           <h6><b>Total Value:</b> ${{item.total}}</h6>
          <h6><b>UPC:</b> {{item.upc}}</h6>
-        
+       &nbsp;
+          <h6><b>City: </b>{{item.weather.location.city}} </h6>
+          <h6><b>Temperature: </b> {{item.weather.temperature}} &#8451;</h6>
+                 <h6><b>Pressure: </b> {{item.weather.pressure}} hPa</h6>
+                 <h6><b>Humidity: </b> {{item.weather.humidity}}%</h6>
+
         </div>
         <div class="card-action">
           <!-- <a href="../product/{{item.id}}/">Details</a> -->
