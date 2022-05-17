@@ -26,8 +26,11 @@ SECRET_KEY = 'django-insecure-*(v*b)(y72h4#*$$i=l^ha)dq&6s5i9snk-^)d_s$p+42tk*7f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["dfbbcb5d-f61f-4d7e-84a9-ef2e9698a0c3.id.repl.co", "production-engineer-intern.jmonteza.repl.co"]
 
+X_FRAME_OPTIONS = '*'
+
+CSRF_TRUSTED_ORIGINS = ["https://production-engineer-intern.jmonteza.repl.co"]
 
 # Application definition
 
