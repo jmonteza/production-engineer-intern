@@ -1,11 +1,10 @@
 from django.urls import path
 
-from .views import index, detail, catalog, create, new_shipment, shipment_detail, shipments
+from .views import detail, catalog, create, new_shipment, shipment_detail, shipments
 
 app_name = 'inventory'
 
 urlpatterns = [
-    # path('', index, name='index'),
     path('', catalog, name='catalog'),
     path('products/<int:item_id>/', detail, name='detail'),
     path('products/new/', create, name='add'),

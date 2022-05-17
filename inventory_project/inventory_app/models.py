@@ -4,6 +4,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 
+
 class Location(models.Model):
     city = models.CharField(max_length=64)
     province = models.CharField(max_length=64)
@@ -12,14 +13,17 @@ class Location(models.Model):
     def __str__(self):
         return "{}, {}, {}".format(self.city, self.province, self.country)
 
+
 class Weather(models.Model):
-    location = models.OneToOneField(Location, on_delete=models.CASCADE, primary_key=True)
+    location = models.OneToOneField(
+        Location, on_delete=models.CASCADE, primary_key=True)
     temperature = models.FloatField(validators=[MinValueValidator(0.0)])
     pressure = models.IntegerField(validators=[MinValueValidator(0)])
     humidity = models.IntegerField(validators=[MinValueValidator(0)])
 
     def __str__(self):
         return "{} | {} | Temp: {}, Pressure: {}, Humidity: {}".format(self.location.id, self.location, self.temperature, self.pressure, self.humidity)
+
 
 class Shipment(models.Model):
     first_name = models.CharField(max_length=32)
@@ -45,6 +49,7 @@ class Shipment(models.Model):
     def __str__(self):
         return "{} | {}".format(self.id, self.ship_code)
 
+
 class Item(models.Model):
     name = models.CharField(max_length=255)
 
@@ -59,7 +64,8 @@ class Item(models.Model):
     upc = models.CharField(max_length=13)
 
     # City + Weather
-    weather = models.ForeignKey(Weather, default=1, on_delete=models.DO_NOTHING)
+    weather = models.ForeignKey(
+        Weather, default=1, on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return "{} | {}".format(self.id, self.name)
@@ -72,5 +78,3 @@ class ItemForShipment(models.Model):
 
     def __str__(self):
         return "{} | {}".format(self.item.name, self.shipment.ship_code)
-
-    

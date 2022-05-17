@@ -1,66 +1,49 @@
 {% extends "inventory_app/base.html" %}
-
 {% block title %} Add Item {% endblock %}
-
 {% block content %}
-
 <div class="row">
-<div class="card-panel">
+    <div class="card-panel">
         <h1 class="indigo-text darken-4 center-align">Add Item</h1>
-  <form action="{% url 'inventory:add' %}" method="post">
-
-      {% csrf_token %}
-     
-      <div class="row">
-        <div class="input-field col s12">
-          <input placeholder="Coca-Cola 2L" name="name" id="name" type="text" required>
-          <label for="name">Item</label>
-        </div>
-      </div>
-      
-        <div class="row">
-        <div class="input-field col s12">
-          <input placeholder="$1.99" name="price" id="price" type="number" step="0.01" min="0.00" data-error="2 decimal places" required>
-          <label for="price">Price</label>
-        </div>
-      </div>
-
-         <div class="row">
-        <div class="input-field col s12">
-    <input placeholder="100" name="quantity" id="quantity" type="number" required>
-          <label for="quantity">Quantity</label>
-        </div>
-      </div>
-
+        <form action="{% url 'inventory:add' %}" method="post">
+            {% csrf_token %}
             <div class="row">
-        <div class="input-field col s12">
-          <input placeholder="036000291452" name="upc" id="upc" type="text" data-length="12" maxlength="12" required>
-          <label for="upc">UPC (Barcode)</label>
-        </div>
-      </div>
-
-   <select name="dropdown" class="browser-default" required>
-      <option value="" disabled selected>Choose city</option>
-      {% if locations %}
-
-      {% for location in locations %}
-      <option value="{{location.location.id}}">{{location.location.city}}</option>
-      {% endfor %}
-
-      {% endif %}
-
-</select>
-
-<hr>
-<h1></h1>
-        <button class="btn waves-effect waves-light indigo darken-4" type="submit" name="action">Submit
-    <i class="material-icons right">send</i>
-  </button>
-
-      
-    </form>
+                <div class="input-field col s12">
+                    <input placeholder="Coca-Cola 2L" name="name" id="name" type="text" required>
+                    <label for="name">Item</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input placeholder="$1.99" name="price" id="price" type="number" step="0.01" min="0.00" data-error="2 decimal places" required>
+                    <label for="price">Price</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input placeholder="100" name="quantity" id="quantity" type="number" required>
+                    <label for="quantity">Quantity</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input placeholder="036000291452" name="upc" id="upc" type="text" data-length="12" maxlength="12" required>
+                    <label for="upc">UPC (Barcode)</label>
+                </div>
+            </div>
+            <select name="dropdown" class="browser-default" required>
+                <option value="" disabled selected>Choose city</option>
+                {% if locations %}
+                {% for location in locations %}
+                <option value="{{location.location.id}}">{{location.location.city}}</option>
+                {% endfor %}
+                {% endif %}
+            </select>
+            <hr>
+            <h1></h1>
+            <button class="btn waves-effect waves-light indigo darken-4" type="submit" name="action">Submit
+            <i class="material-icons right">send</i>
+            </button>
+        </form>
     </div>
-  </div>
-
-
+</div>
 {% endblock %}

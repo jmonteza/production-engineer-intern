@@ -1,63 +1,29 @@
 {% extends "inventory_app/base.html" %}
 {% block title %} Shipments {% endblock %}
 {% block content %}
-
-
-      {% if shipments %}
-
-      <!-- <ul> -->
-     
-          <!-- <li>
-              <a href="../product/{{item.id}}/">{{item.name}}</a>
-        </li> -->
-
- <div class="row">
-
-         {% for shipment in shipments %}
-
+{% if shipments %}
+<div class="row">
+    {% for shipment in shipments %}
     <div class="col s12 m12 l4">
-      <div class="card">
-        <div class="card-image">
-          <img src="https://storage.googleapis.com/justinmonteza/Inventory/Shipment.jpg">
-          <span class="card-title"><b>Shipment #{{shipment.id}}</b></span>
+        <div class="card">
+            <div class="card-image">
+                <img src="https://storage.googleapis.com/justinmonteza/Inventory/Shipment.jpg">
+                <span class="card-title"><b>Shipment #{{shipment.id}}</b></span>
+            </div>
+            <div class="card-content">
+                <h6><b>Receiver</b> <br>{{shipment.first_name}} {{shipment.last_name}}</h6>
+                <h6><b>Shipping Code</b> <br> {{shipment.ship_code}}</h6>
+                <h6><b>Tracking Number</b> <br> {{shipment.tracking_number}}</h6>
+                <h6><b>Address</b> <br> {{shipment.street_address}} {{shipment.city}} {{shipment.state_province_region}}</h6>
+            </div>
+            <div class="card-action">
+                <a class="indigo-text indigo-darken-4" href="{% url 'inventory:shipments' shipment.id %}">Details</a>
+            </div>
         </div>
-        <div class="card-content">
-          <!-- <h6><b>Price:</b> ${{item.price}}</h6>
-          <h6><b>Quantity:</b> {{item.quantity}}</h6>
-          <h6><b>Total Value:</b> ${{item.total}}</h6>
-         <h6><b>UPC:</b> {{item.upc}}</h6> -->
-         
-<h6><b>Receiver</b> <br>{{shipment.first_name}} {{shipment.last_name}}</h6>         
-
-<h6><b>Shipping Code</b> <br> {{shipment.ship_code}}</h6>
-
-<h6><b>Tracking Number</b> <br> {{shipment.tracking_number}}</h6>
-
-<h6><b>Address</b> <br> {{shipment.street_address}} {{shipment.city}} {{shipment.state_province_region}}</h6>
-
-        </div>
-        <div class="card-action">
-    
-          <a class="indigo-text indigo-darken-4" href="{% url 'inventory:shipments' shipment.id %}">Details</a>
-        </div>
-      </div>
     </div>
-
-
-                {% endfor %}
-
-  </div>
-
-
-      <!-- </ul> -->
-
-
-
-      {% else %}
-      <h1 class="center-align"> No shipments are available </h1>
-
-      {% endif %}
-     
-
-      
+    {% endfor %}
+</div>
+{% else %}
+<h1 class="center-align"> No shipments are available </h1>
+{% endif %}
 {% endblock %}

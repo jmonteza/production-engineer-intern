@@ -1,58 +1,33 @@
 {% extends "inventory_app/base.html" %}
-
 {% block content %}
-      {% if all_items %}
-
-      <!-- <ul> -->
-     
-          <!-- <li>
-              <a href="../product/{{item.id}}/">{{item.name}}</a>
-        </li> -->
-
- <div class="row">
-
-         {% for item in all_items %}
-
+{% if all_items %}
+<div class="row">
+    {% for item in all_items %}
     <div class="col s12 m12 l4">
-      <div class="card">
-        <div class="card-image">
-          <img src="https://storage.googleapis.com/justinmonteza/Inventory/Inventory.jpg">
-          
-          <span class="card-title"><b>{{item.name}}</b></span>
+        <div class="card">
+            <div class="card-image">
+                <img src="https://storage.googleapis.com/justinmonteza/Inventory/Inventory.jpg">
+                <span class="card-title"><b>{{item.name}}</b></span>
+            </div>
+            <div class="card-content">
+                <h6><b>Price:</b> ${{item.price}}</h6>
+                <h6><b>Quantity:</b> {{item.quantity}}</h6>
+                <h6><b>Total Value:</b> ${{item.total}}</h6>
+                <h6><b>UPC:</b> {{item.upc}}</h6>
+                &nbsp;
+                <h6><b>City: </b>{{item.weather.location.city}} </h6>
+                <h6><b>Temperature: </b> {{item.weather.temperature}} &#8451;</h6>
+                <h6><b>Pressure: </b> {{item.weather.pressure}} hPa</h6>
+                <h6><b>Humidity: </b> {{item.weather.humidity}}%</h6>
+            </div>
+            <div class="card-action">
+                <a class="indigo-text indigo-darken-4" href="{% url 'inventory:detail' item.id %}">Details</a>
+            </div>
         </div>
-        <div class="card-content">
-          <h6><b>Price:</b> ${{item.price}}</h6>
-          <h6><b>Quantity:</b> {{item.quantity}}</h6>
-          <h6><b>Total Value:</b> ${{item.total}}</h6>
-         <h6><b>UPC:</b> {{item.upc}}</h6>
-       &nbsp;
-          <h6><b>City: </b>{{item.weather.location.city}} </h6>
-          <h6><b>Temperature: </b> {{item.weather.temperature}} &#8451;</h6>
-                 <h6><b>Pressure: </b> {{item.weather.pressure}} hPa</h6>
-                 <h6><b>Humidity: </b> {{item.weather.humidity}}%</h6>
-
-        </div>
-        <div class="card-action">
-          <!-- <a href="../product/{{item.id}}/">Details</a> -->
-          <a class="indigo-text indigo-darken-4" href="{% url 'inventory:detail' item.id %}">Details</a>
-        </div>
-      </div>
     </div>
-
-
-                {% endfor %}
-
-  </div>
-
-
-      <!-- </ul> -->
-
-
-
-      {% else %}
-      <h1 class="center-align"> Inventory is empty </h1>
-
-      {% endif %}
-
-      
+    {% endfor %}
+</div>
+{% else %}
+<h1 class="center-align"> Inventory is empty </h1>
+{% endif %}
 {% endblock %}
