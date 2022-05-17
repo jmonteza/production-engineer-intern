@@ -14,7 +14,7 @@
                 <h6><b>Receiver</b> <br>{{shipment.first_name}} {{shipment.last_name}}</h6>
                 <h6><b>Shipping Code</b> <br> {{shipment.ship_code}}</h6>
                 <h6><b>Tracking Number</b> <br> {{shipment.tracking_number}}</h6>
-                <h6><b>Address</b> <br> {{shipment.street_address}} {{shipment.city}} {{shipment.state_province_region}}</h6>
+                <h6><b>Address</b> <br> {{shipment.street_address}} <br> {{shipment.city}} {{shipment.state_province_region}} <br> {{shipment.country}} {{shipment.postal_code}} </h6>
             </div>
             <div class="card-action">
                 <a class="indigo-text indigo-darken-4" href="{% url 'inventory:shipments' shipment.id %}">Details</a>

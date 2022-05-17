@@ -12,7 +12,7 @@
             <div class="card-content">
                 <h6><b>Price:</b> ${{item.price}}</h6>
                 <h6><b>Quantity:</b> {{item.quantity}}</h6>
-                <h6><b>Total Value:</b> ${{item.total}}</h6>
+                <h6><b>Total Value:</b> ${{item.total|floatformat:2}}</h6>
                 <h6><b>UPC:</b> {{item.upc}}</h6>
                 &nbsp;
                 <h6><b>City: </b>{{item.weather.location.city}} </h6>
