@@ -10,6 +10,6 @@ def generate_tracking_number():
     return secrets.token_hex(10).upper()
 
 
-print(generate_tracking_number())
+# print(generate_tracking_number())
 
-print(generate_ship_code())
+# print(generate_ship_code())

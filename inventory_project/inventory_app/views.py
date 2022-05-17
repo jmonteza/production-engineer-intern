@@ -5,6 +5,7 @@ from .models import Item, Shipment, ItemForShipment, Location, Weather
 from django.db.models import Q
 from .utils import generate_ship_code, generate_tracking_number
 from .weather import get_city_weather
+import threading
 # Create your views here.
 
 
@@ -82,8 +83,31 @@ def create(request):
 # List of items
 
 
+def fetch_weather():
+    locations = Location.objects.all()
+
+    for location in locations:
+        _, temperature, pressure, humidity = get_city_weather(location.city)
+
+        obj, created = Weather.objects.update_or_create(
+            location=location,
+            defaults={'temperature': temperature,
+                      'pressure': pressure, 'humidity': humidity}
+        )
+
+    # print(fetch_weather())
+    # print("fetching weather")
+
+    return None
+
+
+
 def catalog(request):
-    all_items = Item.objects.all()
+    # fetch_weather()
+    thread = threading.Thread(target=fetch_weather)
+    thread.start()
+
+    all_items = Item.objects.filter(quantity__gt=0)
     # output = ', '.join([i.name for i in all_items])
     context = {'all_items': all_items}
     return render(request, 'inventory_app/index.html', context)
@@ -109,9 +133,12 @@ def new_shipment(request):
 
         return HttpResponseRedirect(reverse('inventory:all_shipments'))
 
+
+
+
 def shipments(request):
     shipments = Shipment.objects.all()
-    print(shipments)
+    # print(shipments)
     return render(request, 'inventory_app/shipments.html', {'shipments': shipments})
 
 def shipment_detail(request, shipment_id):
@@ -129,8 +156,7 @@ def shipment_detail(request, shipment_id):
         # for item in items:
             # print(item.item.name)
 
-
-        catalog = Item.objects.exclude(id__in=item_ids)
+        catalog = Item.objects.exclude(id__in=item_ids).exclude(quantity__lte=0)
 
         # catalog = Item.objects.all()
 
@@ -138,6 +164,32 @@ def shipment_detail(request, shipment_id):
 
         return render(request, 'inventory_app/shipment.html', {'items': items, 'shipment': shipment, 'catalog': catalog})
     
+    elif request.method == 'POST' and request.POST.get("delete"):
+
+        id = request.POST.get("delete")
+        item = Item.objects.get(pk=id)
+        shipment = Shipment.objects.get(pk=shipment_id)
+        itemForShipment = ItemForShipment.objects.get(item=item, shipment=shipment)
+
+        item.quantity = item.quantity + itemForShipment.quantity
+        item.total = item.price * item.quantity
+
+        item.save()
+
+        itemForShipment.delete()
+
+        return HttpResponseRedirect(reverse('inventory:shipments', kwargs={'shipment_id': shipment_id}))
+
+    elif request.method == 'POST' and request.POST.get("delete_shipment"):
+        
+        shipment_id = request.POST.get("delete_shipment")
+
+        shipment = Shipment.objects.get(id=shipment_id)
+
+        shipment.delete()
+
+        return HttpResponseRedirect(reverse('inventory:all_shipments'))
+
     else:
         item_id = request.POST.get("dropdown")
         quantity = int(request.POST.get("quantity"))
@@ -146,6 +198,7 @@ def shipment_detail(request, shipment_id):
         shipment = Shipment.objects.get(pk=shipment_id)
         
         item.quantity = item.quantity - quantity
+        item.total = item.price * item.quantity
      
         item.save()
 
@@ -163,21 +216,3 @@ def shipment_detail(request, shipment_id):
         return HttpResponseRedirect(reverse('inventory:shipments', kwargs={'shipment_id':shipment_id}))
 
 
-def test_weather(request):
-    locations = Location.objects.all()
-
-    for location in locations:
-        # print(location.city)
-        # print(location.province)
-        # print(location.country)
-
-        name, temperature, pressure, humidity = get_city_weather(location.city)
-
-        obj, created = Weather.objects.update_or_create(
-            location=location, 
-            defaults={'temperature': temperature, 'pressure': pressure, 'humidity': humidity}
-        )
-
-        # print(name, temperature, pressure, humidity)
-
-    return HttpResponse("Hello World!")
