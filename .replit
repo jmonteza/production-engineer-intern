@@ -1,1 +1,2 @@
 run = ["python3", "inventory_project/manage.py", "runserver", "0.0.0.0:3000"]
+
